@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Bet extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'team_1_score',
+        'team_2_score',
+        'match_id'
+    ];
 }

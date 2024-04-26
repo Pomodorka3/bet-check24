@@ -34,8 +34,16 @@ class CommunityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Community $community)
+//    public function show(Community $community)
+    public function show(int $id)
     {
+        $community = new Community([
+            'name' => 'Community Name',
+            'created_by' => auth()->user()->id
+            ]);
+
+        
+
         // TODO: Check if user in community
         // TODO: Load other community user stats
         return view('community.show', compact('community'));
