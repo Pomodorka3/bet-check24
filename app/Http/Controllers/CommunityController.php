@@ -12,7 +12,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        //
+        return view('community.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class CommunityController extends Controller
      */
     public function create()
     {
-        //
+        return view('community.create');
     }
 
     /**
@@ -36,7 +36,9 @@ class CommunityController extends Controller
      */
     public function show(Community $community)
     {
-        //
+        // TODO: Check if user in community
+        // TODO: Load other community user stats
+        return view('community.show', compact('community'));
     }
 
     /**

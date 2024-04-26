@@ -21,17 +21,17 @@ new class extends Component
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('community.index')" :active="request()->routeIs('community.index')" wire:navigate>
+                        {{ __('Communities') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin-panel')" :active="request()->routeIs('admin-panel')" wire:navigate>
+                        {{ __('Admin panel') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -52,9 +52,9 @@ new class extends Component
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile')" wire:navigate>
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+{{--                        <x-dropdown-link :href="route('profile')" wire:navigate>--}}
+{{--                            {{ __('Profile') }}--}}
+{{--                        </x-dropdown-link>--}}
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
@@ -94,9 +94,9 @@ new class extends Component
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+{{--                <x-responsive-nav-link :href="route('profile')" wire:navigate>--}}
+{{--                    {{ __('Profile') }}--}}
+{{--                </x-responsive-nav-link>--}}
 
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
