@@ -12,4 +12,10 @@ class Team extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function footballMatches()
+    {
+        return $this->hasMany(FootballMatch::class, 'team_1_id')
+            ->orWhere('team_2_id', $this->id);
+    }
 }

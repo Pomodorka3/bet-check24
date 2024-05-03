@@ -15,4 +15,14 @@ class Bet extends Model
         'team_2_score',
         'match_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function match()
+    {
+        return $this->belongsTo(FootballMatch::class);
+    }
 }

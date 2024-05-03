@@ -13,4 +13,13 @@ class Community extends Model
         'name',
         'created_by'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'community_user', 'community_id', 'user_id');
+    }
+
+    public function createdBy() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
