@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -43,7 +44,7 @@ class TeamSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->teamNames as $teamName) {
-            \App\Models\Team::factory()->create([
+            Team::factory()->create([
                 'name' => $teamName,
             ]);
         }

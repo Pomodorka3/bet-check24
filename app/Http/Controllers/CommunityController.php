@@ -28,7 +28,13 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $community = new Community([
+            'name' => $request->get('name'),
+            'created_by' => auth()->user()->id
+        ]);
+        $community->save();
+
+        return redirect()->route('community.show', [$community->id])->with('success', 'Community has been added');
     }
 
     /**

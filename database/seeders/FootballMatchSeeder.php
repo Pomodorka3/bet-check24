@@ -18,7 +18,8 @@ class FootballMatchSeeder extends Seeder
      */
     public function run(): void
     {
-        $reader = Reader::createFromPath(Storage::disk('local')->get('game_schedule.csv'), 'r');
+        $reader = Reader::createFromPath(Storage::disk('local')->path('game_schedule.csv'), 'r');
+        $reader->setDelimiter(';');
         $reader->setHeaderOffset(0); //set the CSV header offset
         $records = $reader->getRecords();
         foreach ($records as $offset => $record) {
@@ -34,15 +35,10 @@ class FootballMatchSeeder extends Seeder
             }
 
             $footballMatch = new FootballMatch();
-            $footballMatch->team_1 = $team1;
-            $footballMatch->team_2 = $team2;
+            $footballMatch->team1()->associate($team1);
+            $footballMatch->team2()->associate($team2);
             $footballMatch->starts_at = Carbon::parse($gameStartsAt);
             $footballMatch->save();
-//            FootballMatch::create([
-//                'team_1_id' => $team1->id,
-//                'team_2_id' => $team2->id,
-//                'starts_at' => Carbon::parse($gameStartsAt),
-//            ]);
         }
 
     }
