@@ -42,7 +42,7 @@ class CommunityController extends Controller
             'created_by' => auth()->user()->id
             ]);
 
-        
+
 
         // TODO: Check if user in community
         // TODO: Load other community user stats
