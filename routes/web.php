@@ -16,9 +16,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('admin-panel');
 //    ->middleware(['auth', 'can:admin']);
 
-    Route::view('dashboard', 'dashboard')
-        ->middleware(['auth', 'verified'])
-        ->name('dashboard');
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard.index');
 
 });
 
