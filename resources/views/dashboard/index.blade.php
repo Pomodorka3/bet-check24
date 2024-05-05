@@ -5,10 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div>
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="">
                 <livewire:dashboard />
+                <livewire:leaderboard />
             </div>
         </div>
     </div>

@@ -25,6 +25,8 @@ class Dashboard extends Component
 
     public function placeBet($matchId, $team1Score, $team2Score)
     {
+        // TODO: check if already betted
+        // TODO: check if match is running
         Bet::create([
             'match_id' => $matchId,
             'team_1_score' => $team1Score,
@@ -36,6 +38,8 @@ class Dashboard extends Component
 
     public function updateBet($matchId, $team1Score, $team2Score)
     {
+        // TODO: check if already betted
+        // TODO: check if match is running
         $bet = Bet::where('match_id', $matchId)
             ->where('user_id', auth()->id())
             ->first();
@@ -45,6 +49,8 @@ class Dashboard extends Component
 
     public function deleteBet($betId)
     {
+        // TODO: check if already betted
+        // TODO: check if match is running
         $bet = Bet::find($betId);
         $bet->delete();
         $this->loadMatches();
@@ -83,7 +89,7 @@ class Dashboard extends Component
     public function loadPastMatches()
     {
         $this->pastMatches = FootballMatch::where('starts_at', '<=', now())
-            ->where('evaluated', false)
+            ->where('evaluated', true)
             ->get();
 
         // Assume duration of 90 minutes of each match

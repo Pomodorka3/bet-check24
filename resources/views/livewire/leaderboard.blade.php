@@ -1,125 +1,99 @@
-<div class="flex flex-col w-full">
-    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-                <table
-                    class="min-w-full text-left text-sm font-light text-surface dark:text-white">
-                    <thead
-                        class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark">
-                    <tr>
-                        <th scope="col" class="px-6 py-2">Name</th>
-                        <th scope="col" class="px-6 py-2">Participants</th>
-                        <th scope="col" class="px-6 py-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr
-                        class="border-b border-neutral-200 bg-black/[0.10] dark:border-white/10">
-                        <td class="whitespace-nowrap px-6 py-2 font-medium">Global standings</td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <div class="flex">
-                                                    <span>
-                                                      29345
-                                                    </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                     class="w-5 h-5 ml-1">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                </svg>
-                            </div>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-3">
-                            <a href="{{route('community.show', 1)}}"
-                               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                Info
-                            </a>
-                        </td>
-                    </tr>
-                    <tr
-                        class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                        <td class="whitespace-nowrap px-6 py-2 font-medium">Czech Guys</td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <div class="flex">
-                                                    <span>
-                                                      1/5
-                                                    </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                     class="w-5 h-5 ml-1">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                </svg>
-                            </div>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <button type="button"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                Info
-                            </button>
-                            <button type="button"
-                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                Leave
-                            </button>
-                        </td>
-                    </tr>
-                    <tr
-                        class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                        <td class="whitespace-nowrap px-6 py-2 font-medium">Czech Guys</td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <div class="flex">
-                                                    <span>
-                                                      1/5
-                                                    </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                     class="w-5 h-5 ml-1">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                </svg>
-                            </div>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <button type="button"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                Info
-                            </button>
-                            <button type="button"
-                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                Leave
-                            </button>
-                        </td>
-                    </tr>
-                    <tr
-                        class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
-                        <td class="whitespace-nowrap px-6 py-2 font-medium">Czech Guys</td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <div class="flex">
-                                                    <span>
-                                                      1/5
-                                                    </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                     class="w-5 h-5 ml-1">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                </svg>
-                            </div>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-2">
-                            <button type="button"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                Info
-                            </button>
-                            <button type="button"
-                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                Leave
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+<div class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="leaderboard">
+
+    <div class="w-full p-6 bg-white overflow-hidden shadow-sm rounded-lg">
+        <h2 class="text-xl">Leaderboard</h2>
+        <div class="flex flex-col w-full">
+            <div class="overflow-x-auto">
+                <div class="inline-block min-w-full py-2">
+                    <div class="overflow-hidden">
+                        <table
+                            class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                            <thead
+                                class="border-b border-neutral-200 bg-white font-medium dark:border-white/10 dark:bg-body-dark">
+                            <tr>
+                                <th scope="col" class="px-6 py-2">Position</th>
+                                <th scope="col" class="px-6 py-2">Username</th>
+                                <th scope="col" class="px-6 py-2">Points</th>
+{{--                                <th scope="col" class="px-6 py-2 text-center"></th>--}}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($users as $user)
+                                <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
+                                    <td class="whitespace-nowrap px-6 py-2 font-medium">
+                                        {{$user->rank}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-2 font-medium">
+                                        {{$user->name}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-2 font-medium">
+                                        {{$user->points}}
+                                    </td>
+                                </tr>
+{{--                                    <td class="whitespace-nowrap px-6 py-2">--}}
+{{--                                        {{$match->team2->name}}--}}
+{{--                                    </td>--}}
+{{--                                    <td class="whitespace-nowrap px-6 py-3">--}}
+{{--                                        {{$match->starts_at->format('d.m.Y H:i')}}--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <div class="flex justify-center">--}}
+{{--                                            @if(isset($match->bet))--}}
+{{--                                                <span--}}
+{{--                                                    class="my-auto">{{$match->bet->team_1_score}} : {{$match->bet->team_2_score}}</span>--}}
+{{--                                                <button--}}
+{{--                                                    x-on:click="showModal({{$match->id}}, {{$match->bet->team_1_score}}, {{$match->bet->team_2_score}}, 'update')"--}}
+{{--                                                    class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold p-1 rounded">--}}
+{{--                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"--}}
+{{--                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"--}}
+{{--                                                         class="w-6 h-6">--}}
+{{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>--}}
+{{--                                                    </svg>--}}
+{{--                                                </button>--}}
+{{--                                                <button--}}
+{{--                                                    wire:click="deleteBet({{$match->bet->id}})"--}}
+{{--                                                    class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded">--}}
+{{--                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"--}}
+{{--                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"--}}
+{{--                                                         class="w-6 h-6">--}}
+{{--                                                        <path stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                                                              d="M6 18 18 6M6 6l12 12"/>--}}
+{{--                                                    </svg>--}}
+{{--                                                </button>--}}
+{{--                                            @else--}}
+{{--                                                <button--}}
+{{--                                                    x-on:click="showModal({{$match->id}}, '', '', 'create')"--}}
+{{--                                                    class="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">--}}
+{{--                                                    Place bet--}}
+{{--                                                </button>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+
+        Alpine.data('leaderboard', () => ({
+            // users: @this.entangle('users').live,
+            // init() {
+            //     this.users = @this.entangle('users');
+            //     console.log(this.users.length);
+            //     for (let i = 0; i < this.users.length; i++) {
+            //         console.log(this.users[i]);
+            //     }
+            // },
+        }))
+    </script>
+@endpush

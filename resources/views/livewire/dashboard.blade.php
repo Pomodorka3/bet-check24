@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
+<div class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
 
     <div class="w-full p-6 bg-white overflow-hidden shadow-sm rounded-lg">
         <h2 class="text-xl">Upcoming matches</h2>
@@ -74,7 +74,6 @@
         </div>
     </div>
 
-
     <div class="w-full p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <h2 class="text-xl">Playing & past matches</h2>
         <div class="flex flex-col w-full">
@@ -114,7 +113,13 @@
                                     <td class="whitespace-nowrap px-6 py-3">
                                         {{$match->ends_at->format('d.m.Y H:i')}}
                                     </td>
-                                    <td></td>
+                                    <td class="whitespace-nowrap px-6 py-3">
+                                        @if(empty($match->bet->team_1_score))
+                                            <span>---</span>
+                                        @else
+                                            <span>{{$match->bet->team_1_score ?? '-'}} : {{$match->bet->team_2_score ?? '-'}}</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
 
