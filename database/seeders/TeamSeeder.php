@@ -9,33 +9,27 @@ use Illuminate\Database\Seeder;
 class TeamSeeder extends Seeder
 {
     private $teamNames = [
-        'Deutschland',
-        'Schottland',
-        'Ungarn',
-        'Schweiz',
-        'Spanien',
-        'Kroatien',
-        'Italien',
-        'Albanien',
-        'Niederlande',
-        'Slowenien',
-        'Dänemark',
-        'England',
-        'Rumänien',
-        'Slowakei',
-        'Serbien',
-        'Belgien',
-        'Österreich',
-        'Frankreich',
-        'Türkei',
-        'Portugal',
-        'Tschechische Republik',
-        'Deutschland',
-        'Schweiz',
-        'Slowakei',
-        'Kroatien',
-        'Frankreich',
-        'England',
+        'Deutschland' => 'de',
+        'Schottland' => 'gb',
+        'Ungarn' => 'hu',
+        'Schweiz' => 'ch',
+        'Spanien' => 'es',
+        'Kroatien' => 'hr',
+        'Italien' => 'it',
+        'Albanien' => 'al',
+        'Niederlande' => 'nl',
+        'Slowenien' => 'si',
+        'Dänemark' => 'dk',
+        'England' => 'gb',
+        'Rumänien' => 'ro',
+        'Slowakei' => 'sk',
+        'Serbien' => 'rs',
+        'Belgien' => 'be',
+        'Österreich' => 'at',
+        'Frankreich' => 'fr',
+        'Türkei' => 'tr',
+        'Portugal' => 'pt',
+        'Tschechische Republik' => 'cz',
     ];
 
     /**
@@ -43,9 +37,10 @@ class TeamSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach ($this->teamNames as $teamName) {
+        foreach ($this->teamNames as $name => $countryCode) {
             Team::factory()->create([
-                'name' => $teamName,
+                'name' => $name,
+                'countrycode' => $countryCode,
             ]);
         }
     }

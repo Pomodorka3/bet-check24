@@ -21,10 +21,20 @@
                             @foreach($upcomingMatches as $match)
                                 <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
                                     <td class="whitespace-nowrap px-6 py-2 font-medium">
-                                        {{$match->team1->name}}
+                                        <div class="flex">
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team1->countrycode.'.svg')}}"
+                                                 alt="{{$match->team1->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team1->name}}</span>
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{$match->team2->name}}
+                                        <div class="flex">
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team2->countrycode.'.svg')}}"
+                                                 alt="{{$match->team2->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team2->name}}</span>
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
                                         {{$match->starts_at->format('d.m.Y H:i')}}
@@ -97,15 +107,25 @@
                                 <tr class="border-b border-neutral-200 bg-black/[0.02] dark:border-white/10">
                                     <td class="whitespace-nowrap px-6 py-2 font-medium">
                                         <div class="flex" title="LIVE">
-                                            <span>{{$match->team1->name}}</span>
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team1->countrycode.'.svg')}}"
+                                                 alt="{{$match->team1->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team1->name}}</span>
                                             <div class="ml-2 my-auto relative flex h-4 w-4">
-                                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                              <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
+                                                <span
+                                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                                <span
+                                                    class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{$match->team2->name}}
+                                        <div class="flex">
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team2->countrycode.'.svg')}}"
+                                                 alt="{{$match->team2->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team2->name}}</span>
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
                                         {{$match->starts_at->format('d.m.Y H:i')}}
@@ -126,10 +146,20 @@
                             @foreach($pastMatches as $match)
                                 <tr class="text-gray-400 border-b border-neutral-200 bg-black/[0.08] dark:border-white/10">
                                     <td class="whitespace-nowrap px-6 py-2 font-medium">
-                                        {{$match->team1->name}}
+                                        <div class="flex">
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team1->countrycode.'.svg')}}"
+                                                 alt="{{$match->team1->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team1->name}}</span>
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{$match->team2->name}}
+                                        <div class="flex">
+                                            <img class="w-6 h-6"
+                                                 src="{{Vite::asset('resources/images/flags/'.$match->team2->countrycode.'.svg')}}"
+                                                 alt="{{$match->team2->countrycode}}">
+                                            <span class="my-auto ml-2">{{$match->team2->name}}</span>
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
                                         {{$match->starts_at->format('d.m.Y H:i')}}
