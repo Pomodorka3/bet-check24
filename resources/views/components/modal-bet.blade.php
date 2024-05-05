@@ -1,35 +1,22 @@
 
-<div
+<div x-cloak
     x-data="{
         placeBet() {
             $wire.placeBet(this.matchId, this.home, this.away);
+            this.resetModal();
+        },
+        updateBet() {
+            $wire.updateBet(this.matchId, this.home, this.away);
+            this.resetModal();
+        },
+        resetModal() {
             this.modalShow = false;
             this.home = '';
             this.away = '';
             this.matchId = '';
+            this.betMode = '';
         },
-        focusables() {
-            // All focusable element types...
-            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
-            return [...$el.querySelectorAll(selector)]
-                // All non-disabled elements...
-                .filter(el => ! el.hasAttribute('disabled'))
-        },
-        firstFocusable() { return this.focusables()[0] },
-        lastFocusable() { return this.focusables().slice(-1)[0] },
-        nextFocusable() { return this.focusables()[this.nextFocusableIndex()] || this.firstFocusable() },
-        prevFocusable() { return this.focusables()[this.prevFocusableIndex()] || this.lastFocusable() },
-        nextFocusableIndex() { return (this.focusables().indexOf(document.activeElement) + 1) % (this.focusables().length + 1) },
-        prevFocusableIndex() { return Math.max(0, this.focusables().indexOf(document.activeElement)) -1 },
     }"
-    x-init="$watch('modalShow', value => {
-        if (value) {
-            document.body.classList.add('overflow-y-hidden');
-            {{ $attributes->has('focusable') ? 'setTimeout(() => firstFocusable().focus(), 100)' : '' }}
-        } else {
-            document.body.classList.remove('overflow-y-hidden');
-        }
-    })"
     x-on:close.stop="modalShow = false"
     x-on:keydown.escape.window="modalShow = false"
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
@@ -86,24 +73,15 @@
                                class="w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                x-model="away" placeholder="-" min="0">
                         <span class="my-auto ml-1">Away</span>
-                        <span x-text="matchId"></span>
-{{--                        @if(isset($match->bet))--}}
-{{--                            <button wire:click="updateBet()"--}}
-{{--                                    class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 px-3 rounded">--}}
-{{--                                Change--}}
-{{--                            </button>--}}
-{{--                        @else--}}
-{{--                            <button x-transition x-show="home !== '' && away !== ''" @click="$wire.placeBet(1, 1, 1)"--}}
-{{--                                    class="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold my-1 px-3 rounded">--}}
-{{--                                Bet--}}
-{{--                            </button>--}}
-{{--                        @endif--}}
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button x-transition x-show="home !== '' && away !== ''" x-on:click="placeBet()"
+                    <button x-transition x-show="betMode === 'create' && home !== '' && away !== ''" x-on:click="placeBet()"
                             class="mx-auto py-2.5 px-5 bg-green-500 hover:bg-green-700 text-white font-bold rounded">Place Bet
+                    </button>
+                    <button x-transition x-show="betMode === 'update'" x-on:click="updateBet()"
+                            class="mx-auto py-2.5 px-5 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Update Bet
                     </button>
                 </div>
             </div>
