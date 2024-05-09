@@ -7,10 +7,8 @@
 
     <div>
         <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="">
-                <livewire:dashboard />
-                <livewire:leaderboard />
-            </div>
+            <livewire:dashboard/>
+            <livewire:leaderboard/>
         </div>
     </div>
 </x-app-layout>

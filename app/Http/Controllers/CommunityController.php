@@ -83,6 +83,7 @@ class CommunityController extends Controller
 
     public function join(Community $community)
     {
+        // TODO: Check if user is already in 5 communities
         $community->users()->attach(auth()->user()->id);
         return redirect()->route('community.index')->with('success', 'You have joined the community');
     }
