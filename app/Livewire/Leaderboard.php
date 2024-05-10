@@ -21,8 +21,9 @@ class Leaderboard extends Component
     public $currentUserInLastSevenUsers;
     public $currentUserInFirstThreeUsers;
     public $matches;
+    public $communityId;
 
-    public function render()
+    public function render($communityId)
     {
         return view('livewire.leaderboard');
     }

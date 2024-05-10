@@ -40,4 +40,39 @@ class FootballMatch extends Model
     {
         return $this->hasMany(Bet::class);
     }
+
+    public function evaluate()
+    {
+        $bets = $this->bets;
+        foreach ($bets as $bet) {
+
+            if ($this->team_1_score === $bet->team_1_score && $this->team_2_score === $bet->team_2_score) {
+                // Correct score
+                $points = 8;
+            } elseif (($this->team_1_score - $this->team_2_score) === ($bet->team_1_score - $bet->team_2_score)) {
+                // Correct goal difference
+                $points = 6;
+                if ($this->team_1_score === $this->team_2_score) {
+                    // Correct goal difference and draw
+                    $points = 4;
+                }
+            } elseif ($bet->team_1_score > $bet->team_2_score && $this->team_1_score > $this->team_2_score
+                || $bet->team_2_score > $bet->team_1_score && $this->team_2_score > $this->team_1_score) {
+                // Correct winner aka "correct tendency"
+                $points = 4;
+            } else {
+                // No points
+                $points = 0;
+            }
+
+            // Update only if points are greater than 0
+            if ($points > 0)
+                $bet->user->update([
+                    'points' => $points
+                ]);
+        }
+
+        $this->evaluated = true;
+        $this->save();
+    }
 }
