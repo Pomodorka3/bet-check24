@@ -18,6 +18,8 @@ class Leaderboard extends Component
     public $users1Expandable = false;
     public $users2Expandable = false;
     public $currentUserOrder;
+    public $currentUserInLastSevenUsers;
+    public $currentUserInFirstThreeUsers;
     public $matches;
 
     public function render()
@@ -34,22 +36,32 @@ class Leaderboard extends Component
 
         $this->offset2 = $this->currentUserOrder = $this->users->search(function ($user) {
             return $user->id === auth()->id();
-        }); // e.g. 100
+        }) + 1; // e.g. 100
+
+        if ($this->currentUserOrder > $this->users->count() - 7) {
+            $this->offset2 = $this->users->count() - 7;
+            $this->currentUserInLastSevenUsers = $this->users->count() - 7;
+        }
+
+        if ($this->currentUserOrder <= 3) {
+            $this->offset2 = $this->users->count() - 7;
+            $this->currentUserInFirstThreeUsers = $this->users->count() - 7;
+        }
 
         $this->reloadLeaderboard();
     }
 
     public function reloadLeaderboard()
     {
-//        $this->currentUserOrder = $this->users->search(function ($user) {
-//            return $user->id === auth()->id();
-//        }); // e.g. 100
-
         $this->users1 = $this->users->slice(0, $this->limit1);
 
-//        dd($this->currentUserOrder - $this->offset2 + 1);
-        $this->users2 = $this->users->slice($this->offset2, $this->currentUserOrder - $this->offset2 + 1)
-            ->merge($this->users->slice($this->users->count() - ($this->usersPerPage - 3 - 1), $this->users->count()));
+        if ($this->currentUserInLastSevenUsers) {
+//            dd('You are in the last seven users');
+            $this->users2 = $this->users->slice($this->offset2);
+        } else {
+            $this->users2 = $this->users->slice($this->offset2, $this->currentUserOrder - $this->offset2 + 1)
+                ->merge($this->users->slice($this->users->count() - ($this->usersPerPage - 3 - 1), $this->users->count()));
+        }
 
         // TODO: append pinned users to the beginning
         // TODO: remove pinned users from the list (to avoid duplicates)
@@ -70,6 +82,11 @@ class Leaderboard extends Component
             ->orderBy('name', 'asc')
             ->get();
 
+        $this->users1 = $this->users;
+        $this->users2 = null;
+
+        $this->users1Expandable = false;
+        $this->users2Expandable = false;
         $this->calculateUsersRank();
     }
 
@@ -79,8 +96,8 @@ class Leaderboard extends Component
             return $user->id === $this->users1->last()->id;
         });
 
-        $users2LastUserOrder = $this->users->search(function ($user) {
-            return $user->id === $this->users2->first()->id;
+        $users2LastUserOrder = $this->users?->search(function ($user) {
+            return $user->id === $this->users2?->first()->id;
         });
 
         return $users1LastUserOrder + 1 === $users2LastUserOrder;
@@ -94,7 +111,8 @@ class Leaderboard extends Component
 
         $this->users2Expandable =
             $this->offset2 > $this->limit1
-            && !$this->checkUserListsAreConnected();
+            && !$this->checkUserListsAreConnected()
+            && !$this->currentUserInFirstThreeUsers;
     }
 
     public function expandUsers1()
