@@ -7,7 +7,7 @@
 
     <div>
         <div class="mx-auto sm:px-6 lg:px-8">
-            <livewire:leaderboard :community="$community" />
+            <livewire:leaderboard :communityId="$community->id" />
         </div>
     </div>
 </x-app-layout>

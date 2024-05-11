@@ -45,12 +45,11 @@ class Leaderboard extends Component
 
         if ($this->currentUserOrder > $this->users->count() - 7) {
             $this->offset2 = $this->users->count() - 7;
-            $this->currentUserInLastSevenUsers = $this->users->count() - 7;
+            $this->currentUserInLastSevenUsers = true;
         }
 
         if ($this->currentUserOrder <= 3) {
-            $this->offset2 = $this->users->count() - 7;
-            $this->currentUserInFirstThreeUsers = $this->users->count() - 7;
+            $this->currentUserInFirstThreeUsers = true;
         }
 
         $this->reloadLeaderboard();
@@ -58,16 +57,21 @@ class Leaderboard extends Component
 
     public function reloadLeaderboard()
     {
-        $this->users1 = $this->users->slice(0, $this->limit1);
+        if ($this->users->count() < $this->usersPerPage) {
 
-        if ($this->currentUserInLastSevenUsers) {
-//            dd('You are in the last seven users');
-            $this->users2 = $this->users->slice($this->offset2);
+            $this->users1 = $this->users;
+            $this->users2 = null;
         } else {
-            $this->users2 = $this->users->slice($this->offset2, $this->currentUserOrder - $this->offset2 + 1)
-                ->merge($this->users->slice($this->users->count() - ($this->usersPerPage - 3 - 1), $this->users->count()));
-        }
+            $this->users1 = $this->users->slice(0, $this->limit1);
 
+            if ($this->currentUserInLastSevenUsers) {
+                $this->users2 = $this->users->slice($this->offset2);
+            } else {
+                $this->users2 = $this->users->slice($this->offset2, $this->currentUserOrder - $this->offset2 + 1)
+                    ->merge($this->users->slice($this->users->count() - ($this->usersPerPage - 3 - 1), $this->users->count()));
+            }
+
+        }
         // TODO: append pinned users to the beginning
         // TODO: remove pinned users from the list (to avoid duplicates)
 
@@ -103,8 +107,8 @@ class Leaderboard extends Component
 
     private function checkUserListsAreConnected()
     {
-        $users1LastUserOrder = $this->users->search(function ($user) {
-            return $user->id === $this->users1->last()->id;
+        $users1LastUserOrder = $this->users?->search(function ($user) {
+            return $user->id === $this->users1?->last()->id;
         });
 
         $users2LastUserOrder = $this->users?->search(function ($user) {

@@ -7,6 +7,7 @@
 {{--            <p>Offset: {{$this->offset2}}</p>--}}
 {{--            <p>{{$this->currentUserOrder}}</p>--}}
 {{--            <p>{{$this->currentUserOrder - $this->offset2 + 1}}</p>--}}
+            @if($users->count() > 0)
             <div class="flex" x-data="{userToSearch: ''}">
                 <input x-model="userToSearch" type="text" id="userToSearch" name="userToSearch"
                        @keydown.enter="$wire.searchUser(userToSearch)"
@@ -21,11 +22,13 @@
                     </svg>
                 </button>
             </div>
+            @endif
         </div>
         <div class="flex flex-col w-full">
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
+                        @if($users->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -161,6 +164,9 @@
                             @endif
                             </tbody>
                         </table>
+                        @else
+                            <p>No users found in this community</p>
+                        @endif
                     </div>
                 </div>
             </div>
