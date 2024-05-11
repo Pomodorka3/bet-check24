@@ -6,6 +6,7 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
+                        @if($upcomingMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -78,6 +79,9 @@
 
                             </tbody>
                         </table>
+                        @else
+                            <p>No upcoming matches.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -90,6 +94,7 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
+                        @if($runningMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -173,6 +178,9 @@
 
                             </tbody>
                         </table>
+                        @else
+                            <p>No playing or past matches.</p>
+                        @endif
                     </div>
                 </div>
             </div>
