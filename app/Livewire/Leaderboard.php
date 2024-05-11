@@ -23,14 +23,18 @@ class Leaderboard extends Component
     public $matches;
     public $communityId;
 
-    public function render($communityId)
+    public function render($communityId = null)
     {
+        $this->communityId = $communityId;
         return view('livewire.leaderboard');
     }
 
     public function mount()
     {
-        $this->users = User::with('bets', 'bets.match')
+        $this->users = User::with(['bets', 'bets.match'])
+            ->whereHas('communities', function ($query) {
+                $query->where('id', $this->communityId);
+            })
             ->orderBy('points', 'desc')
             ->orderBy('name', 'asc')
             ->get();

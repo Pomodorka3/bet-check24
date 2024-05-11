@@ -8,7 +8,7 @@
     <div>
         <div class="mx-auto sm:px-6 lg:px-8">
             <livewire:dashboard/>
-            <livewire:leaderboard/>
+            <livewire:leaderboard communityId='1'/>
         </div>
     </div>
 </x-app-layout>
