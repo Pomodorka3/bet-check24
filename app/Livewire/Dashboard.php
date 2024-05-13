@@ -79,11 +79,6 @@ class Dashboard extends Component
         $this->runningMatches = FootballMatch::where('starts_at', '<=', now())
             ->where('evaluated', false)
             ->get();
-
-        // Assume duration of 90 minutes of each match
-        foreach ($this->runningMatches as $match) {
-            $match->ends_at = $match->starts_at->addMinutes(90);
-        }
     }
 
     public function loadPastMatches()
@@ -91,10 +86,5 @@ class Dashboard extends Component
         $this->pastMatches = FootballMatch::where('starts_at', '<=', now())
             ->where('evaluated', true)
             ->get();
-
-        // Assume duration of 90 minutes of each match
-        foreach ($this->pastMatches as $match) {
-            $match->ends_at = $match->starts_at->addMinutes(90);
-        }
     }
 }

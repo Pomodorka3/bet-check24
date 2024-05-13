@@ -1,4 +1,4 @@
-<div class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
+<div wire:poll class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
 
     <div class="w-full p-6 bg-white overflow-hidden shadow-sm rounded-lg">
         <h2 class="text-xl">Upcoming matches</h2>
@@ -6,7 +6,6 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
-                        @if($upcomingMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -79,9 +78,6 @@
 
                             </tbody>
                         </table>
-                        @else
-                            <p>No upcoming matches.</p>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -94,7 +90,6 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
-                        @if($runningMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -104,6 +99,7 @@
                                 <th scope="col" class="px-6 py-2">Team Away</th>
                                 <th scope="col" class="px-6 py-2">Game start</th>
                                 <th scope="col" class="px-6 py-2">Game end</th>
+                                <th scope="col" class="px-6 py-2">Current score</th>
                                 <th scope="col" class="px-6 py-2">My bet</th>
                             </tr>
                             </thead>
@@ -136,7 +132,10 @@
                                         {{$match->starts_at->format('d.m.Y H:i')}}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
-                                        {{$match->ends_at->format('d.m.Y H:i')}}
+                                        {{$match->starts_at->addMinutes(90)->format('d.m.Y H:i')}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-3">
+                                        {{$match->team_1_score ?? '-'}} : {{$match->team_2_score ?? '-'}}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
                                         @if(empty($match->bet->team_1_score))
@@ -170,7 +169,7 @@
                                         {{$match->starts_at->format('d.m.Y H:i')}}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
-                                        {{$match->ends_at->format('d.m.Y H:i')}}
+                                        {{$match->starts_at->addMinutes(90)->format('d.m.Y H:i')}}
                                     </td>
                                     <td></td>
                                 </tr>
@@ -178,9 +177,6 @@
 
                             </tbody>
                         </table>
-                        @else
-                            <p>No playing or past matches.</p>
-                        @endif
                     </div>
                 </div>
             </div>

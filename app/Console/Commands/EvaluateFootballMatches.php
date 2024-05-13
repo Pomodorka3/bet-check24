@@ -26,7 +26,8 @@ class EvaluateFootballMatches extends Command
      */
     public function handle()
     {
-        $matches = FootballMatch::all();
+        $matches = FootballMatch::where('starts_at', '<=', now())
+            ->get();
 
         foreach ($matches as $match) {
             $match->evaluate();

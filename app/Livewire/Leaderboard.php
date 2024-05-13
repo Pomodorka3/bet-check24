@@ -22,6 +22,7 @@ class Leaderboard extends Component
     public $currentUserInFirstThreeUsers;
     public $matches;
     public $communityId;
+    public string $usernameToSearch = '';
 
     public function render()
     {
@@ -31,6 +32,23 @@ class Leaderboard extends Component
     public function mount($communityId)
     {
         $this->communityId = $communityId;
+
+        $this->calculateOffsets();
+        $this->reloadLeaderboard();
+//        dd($this->users->first()->bets->where('match_id', 24)->first());
+
+    }
+
+    public function refresh(){
+        if ($this->usernameToSearch !== '')
+            $this->searchUser();
+        else {
+            $this->calculateOffsets();
+            $this->reloadLeaderboard();
+        }
+    }
+
+    public function calculateOffsets() {
         $this->users = User::with(['bets', 'bets.match'])
             ->whereHas('communities', function ($query) {
                 $query->where('id', $this->communityId);
@@ -40,8 +58,8 @@ class Leaderboard extends Component
             ->get();
 
         $this->offset2 = $this->currentUserOrder = $this->users->search(function ($user) {
-            return $user->id === auth()->id();
-        }) + 1; // e.g. 100
+                return $user->id === auth()->id();
+            }) + 1; // e.g. 100
 
         if ($this->currentUserOrder > $this->users->count() - 7) {
             $this->offset2 = $this->users->count() - 7;
@@ -51,8 +69,6 @@ class Leaderboard extends Component
         if ($this->currentUserOrder <= 3) {
             $this->currentUserInFirstThreeUsers = true;
         }
-
-        $this->reloadLeaderboard();
     }
 
     public function reloadLeaderboard()
@@ -83,16 +99,16 @@ class Leaderboard extends Component
         $this->calculateUsersRank();
     }
 
-    public function searchUser($username)
+    public function searchUser()
     {
-        if ($username === '')
+        if ($this->usernameToSearch === '')
             return;
 
         $this->users = User::with('bets', 'bets.match')
             ->whereHas('communities', function ($query) {
                 $query->where('id', $this->communityId);
             })
-            ->where('name', 'like', '%' . $username . '%')
+            ->where('name', 'like', '%' . $this->usernameToSearch . '%')
             ->orderBy('points', 'desc')
             ->orderBy('name', 'asc')
             ->get();

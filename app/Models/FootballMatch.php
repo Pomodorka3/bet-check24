@@ -38,7 +38,7 @@ class FootballMatch extends Model
 
     public function bets()
     {
-        return $this->hasMany(Bet::class);
+        return $this->hasMany(Bet::class, 'match_id');
     }
 
     public function evaluate()
