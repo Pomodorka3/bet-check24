@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="flex flex-col w-full">
-            <div class="overflow-x-auto">
-                <div class="inline-block min-w-full py-2">
+            <div class="overflow-x-auto my-2 border rounded">
+                <div class="inline-block min-w-full">
                     <div class="overflow-hidden">
                         @if($users->count() > 0)
                             <table
@@ -56,18 +56,34 @@
                                 <tbody>
 
                                 @foreach($users1 as $user)
-                                    <tr class="border-b border-neutral-200 @if($user->id === auth()->user()->id) bg-black/[0.1] @else bg-black/[0.02] @endif dark:border-white/10">
+
+                                    <tr class="border-b border-neutral-200
+                                    @if($user->id === auth()->user()->id) bg-black/[0.1] @elseif($user->pinned) bg-blue-100 @else bg-black/[0.02] @endif
+                                    dark:border-white/10">
                                         <td class="whitespace-nowrap p-2">
-                                            <button wire:click="pinUser({{$user->id}})" title="Pin user" type="button"
-                                                    class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 transition-all hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
-                                                </svg>
-                                            </button>
+                                            @if($user->pinned)
+                                                <button wire:click="unpinUser({{$user->id}})" title="Unpin user"
+                                                        type="button"
+                                                        class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-red-600/20 hover:bg-red-600 hover:text-white rounded-lg border border-gray-200 transition-all focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                         class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="m3 3 1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 0 1 1.743-1.342 48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664 19.5 19.5"/>
+                                                    </svg>
+                                                </button>
+                                            @else
+                                                <button wire:click="pinUser({{$user->id}})" title="Pin user"
+                                                        type="button"
+                                                        class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 transition-all hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                         class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
+                                                    </svg>
+                                                </button>
+                                            @endif
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-2 font-medium">
                                             {{$user->rank}}
@@ -80,28 +96,28 @@
                                         </td>
                                         @foreach($matches as $match)
 
-                                                <td class="whitespace-nowrap px-1 @if(!$user->bets->where('match_id', $match->id)->count()) bg-gray-100/[0.8] @endif">
-                                                    <div class="flex justify-center">
-                                                        <div class="">
-                                                            @if($user->bets->where('match_id', $match->id)->count() > 0)
-                                                                <div class="flex flex-col">
-                                                                    @if($match->starts_at <= now() && !$match->evaluated)
-                                                                        <div class="flex">
-                                                                            <div class="my-auto relative flex h-2 w-2">
+                                            <td class="whitespace-nowrap px-1 @if(!$user->bets->where('match_id', $match->id)->count()) bg-gray-100/[0.8] @endif">
+                                                <div class="flex justify-center">
+                                                    <div class="">
+                                                        @if($user->bets->where('match_id', $match->id)->count() > 0)
+                                                            <div class="flex flex-col">
+                                                                @if($match->starts_at <= now() && !$match->evaluated)
+                                                                    <div class="flex">
+                                                                        <div class="my-auto relative flex h-2 w-2">
                                                                                 <span
                                                                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                                                                <span
-                                                                                    class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                                                            </div>
-                                                                            <span class="ml-2"
-                                                                                  title="Current score">({{$match->team_1_score}} : {{$match->team_2_score}})</span>
+                                                                            <span
+                                                                                class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                                                                         </div>
-                                                                    @endif
-                                                                        <span class="text-center">{{$user->bets->where('match_id', $match->id)->first()->team_1_score}} : {{$user->bets->where('match_id', $match->id)->first()->team_2_score}}</span>
-                                                                </div>
-                                                            @else
-                                                                <div class="flex flex-col">
-                                                                    @if($match->starts_at <= now() && !$match->evaluated)
+                                                                        <span class="ml-2"
+                                                                              title="Current score">({{$match->team_1_score}} : {{$match->team_2_score}})</span>
+                                                                    </div>
+                                                                @endif
+                                                                <span class="text-center">{{$user->bets->where('match_id', $match->id)->first()->team_1_score}} : {{$user->bets->where('match_id', $match->id)->first()->team_2_score}}</span>
+                                                            </div>
+                                                        @else
+                                                            <div class="flex flex-col">
+                                                                @if($match->starts_at <= now() && !$match->evaluated)
                                                                     <div class="flex">
                                                                         <div class="my-auto relative flex h-2 w-2">
                                                                             <span
@@ -112,13 +128,14 @@
                                                                         <span class="ml-2"
                                                                               title="Current score">({{$match->team_1_score}} : {{$match->team_2_score}})</span>
                                                                     </div>
-                                                                    @endif
-                                                                        <span class="text-center text-gray-400" title="Player's bet">- : -</span>
-                                                                </div>
-                                                            @endif
-                                                        </div>
+                                                                @endif
+                                                                <span class="text-center text-gray-400"
+                                                                      title="Player's bet">- : -</span>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
                                         @endforeach
                                     </tr>
                                 @endforeach
@@ -155,13 +172,10 @@
                                                             type="button"
                                                             class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 transition-all hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                             viewBox="0 0 24 24" stroke-width="1.5"
-                                                             stroke="currentColor"
+                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                              class="w-6 h-6">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
-                                                                  d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
+                                                                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
                                                         </svg>
                                                     </button>
                                                 @endif

@@ -53,7 +53,6 @@ class SneakPreview extends Component
             $offset2 = $users->count() - 3;
             $currentUserInLastTwoUsers = true;
         }
-
         if ($users->count() <= 7) {
             // Simply show all seven users ordered by points
             $this->users = $users;
@@ -72,7 +71,7 @@ class SneakPreview extends Component
                 $this->users = $this->users->merge($users->take(3));
                 $this->users->push($users->slice($currentUserOrder - 1, 1)->first());
                 $this->users->push(auth()->user());
-                $this->users->push($users->slice($currentUserOrder, 1)->first());
+                $this->users->push($users->slice($currentUserOrder + 1, 1)->first());
                 $this->users = $this->users->add($users->slice($users->count() - 1)->first());
             }
         }

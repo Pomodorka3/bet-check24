@@ -39,7 +39,8 @@ class Leaderboard extends Component
 
     }
 
-    public function refresh(){
+    public function refresh()
+    {
         if ($this->usernameToSearch !== '')
             $this->searchUser();
         else {
@@ -48,7 +49,8 @@ class Leaderboard extends Component
         }
     }
 
-    public function calculateOffsets() {
+    public function calculateOffsets()
+    {
         $this->users = User::with(['bets', 'bets.match'])
             ->whereHas('communities', function ($query) {
                 $query->where('id', $this->communityId);
@@ -95,6 +97,7 @@ class Leaderboard extends Component
         $this->matches = FootballMatch::orderBy('starts_at', 'asc')
             ->get();
 
+        $this->loadPinnedUsers();
         $this->checkUsersExpandable();
         $this->calculateUsersRank();
     }
@@ -187,7 +190,60 @@ class Leaderboard extends Component
 
     public function pinUser(User $user)
     {
-        dd($user);
+        $pinnedUsers = auth()->user()->settings()->get('leaderboard.' . $this->communityId, []);
+        if (!in_array($user->id, $pinnedUsers))
+            $pinnedUsers[] = $user->id;
+
+        auth()->user()->settings()->set('leaderboard.' . $this->communityId, $pinnedUsers);
+        $this->reloadLeaderboard();
+    }
+
+    public function unpinUser(User $user)
+    {
+        $pinnedUsers = auth()->user()->settings()->get('leaderboard.' . $this->communityId, []);
+        if (!in_array($user->id, $pinnedUsers))
+            return false; // Error
+
+        $pinnedUsers = array_diff($pinnedUsers, [$user->id]);
+        auth()->user()->settings()->set('leaderboard.' . $this->communityId, $pinnedUsers);
+        $this->reloadLeaderboard();
+    }
+
+    public function loadPinnedUsers()
+    {
+        $pinnedUsers = auth()->user()->settings()->get('leaderboard.' . $this->communityId, []);
+
+        // Check if pinned user is still part of the community
+        $pinnedUsers = $this->checkIfPinnedUsersUpToDate($pinnedUsers);
+
+        // Prepend pinned users to the beginning of the users1 list
+        // and remove from the whole users list to avoid duplicates
+        foreach ($pinnedUsers as $pinnedUserId) {
+            foreach ([1, 2] as $i) {
+
+                $this->{'users' . $i} = $this->{'users' . $i}->reject(function ($user) use ($pinnedUserId) {
+                    return $user->id === $pinnedUserId;
+                });
+            }
+
+            $userToPin = $this->users->where('id', $pinnedUserId)->first();
+            $userToPin->pinned = true;
+            $this->users1->prepend($userToPin);
+        }
+
+    }
+
+    public function checkIfPinnedUsersUpToDate($pinnedUsers)
+    {
+        $pinnedUsersChecked = array_filter($pinnedUsers, function ($pinnedUserId) {
+            return $this->users->contains('id', $pinnedUserId);
+        });
+        if ($pinnedUsers !== $pinnedUsersChecked) {
+            auth()->user()->settings()->set('leaderboard.' . $this->communityId, $pinnedUsersChecked);
+            $pinnedUsers = $pinnedUsersChecked;
+        }
+
+        return $pinnedUsers;
     }
 
 }
