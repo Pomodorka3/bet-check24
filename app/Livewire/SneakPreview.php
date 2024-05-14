@@ -18,6 +18,7 @@ class SneakPreview extends Component
 
     public function mount(Community $community)
     {
+        $this->users = collect();
         $this->community = $community;
 
         $this->reloadSneakPreview();
@@ -25,12 +26,56 @@ class SneakPreview extends Component
 
     public function refresh()
     {
+        $this->users = collect();
         $this->reloadSneakPreview();
     }
 
     public function reloadSneakPreview()
     {
-        $this->users = User::limit(5)->get();
+        $users = User::with(['bets', 'bets.match'])
+            ->whereHas('communities', function ($query) {
+                $query->where('id', $this->community->id);
+            })
+            ->orderBy('points', 'desc')
+            ->orderBy('created_at', 'desc') // Newest users first
+            ->get();
+
+        $currentUserOrder = $users->search(function ($user) {
+                return $user->id === auth()->id();
+            });
+
+        $currentUserInLastTwoUsers = false;
+        $currentUserInFirstThreeUsers = false;
+        if ($currentUserOrder <= 3) {
+            $currentUserInFirstThreeUsers = true;
+        }
+        if ($currentUserOrder > $users->count() - 3) {
+            $offset2 = $users->count() - 3;
+            $currentUserInLastTwoUsers = true;
+        }
+
+        if ($users->count() <= 7) {
+            // Simply show all seven users ordered by points
+            $this->users = $users;
+            $this->calculateUsersRank();
+            return;
+        } else {
+            // Community has more than 7 users
+            // All possible cases:
+            if ($currentUserInFirstThreeUsers && !$currentUserInLastTwoUsers) {
+                $this->users = $this->users->merge($users->take(6));
+                $this->users->push($users->reverse()->first());
+            } elseif (!$currentUserInFirstThreeUsers && $currentUserInLastTwoUsers) {
+                $this->users = $this->users->merge($users->take(3));
+                $this->users = $this->users->merge($users->slice($users->count() - 4));
+            } else {
+                $this->users = $this->users->merge($users->take(3));
+                $this->users->push($users->slice($currentUserOrder - 1, 1)->first());
+                $this->users->push(auth()->user());
+                $this->users->push($users->slice($currentUserOrder, 1)->first());
+                $this->users = $this->users->add($users->slice($users->count() - 1)->first());
+            }
+        }
 
         $this->calculateUsersRank();
     }

@@ -54,7 +54,7 @@ class Leaderboard extends Component
                 $query->where('id', $this->communityId);
             })
             ->orderBy('points', 'desc')
-            ->orderBy('name', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $this->offset2 = $this->currentUserOrder = $this->users->search(function ($user) {
@@ -110,7 +110,7 @@ class Leaderboard extends Component
             })
             ->where('name', 'like', '%' . $this->usernameToSearch . '%')
             ->orderBy('points', 'desc')
-            ->orderBy('name', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $this->users1 = $this->users;
