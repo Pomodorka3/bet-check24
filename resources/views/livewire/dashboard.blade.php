@@ -99,7 +99,7 @@
                                 <th scope="col" class="px-6 py-2">Team Away</th>
                                 <th scope="col" class="px-6 py-2">Game start</th>
                                 <th scope="col" class="px-6 py-2">Game end</th>
-                                <th scope="col" class="px-6 py-2">Current score</th>
+                                <th scope="col" class="px-6 py-2">Match score</th>
                                 <th scope="col" class="px-6 py-2">My bet</th>
                             </tr>
                             </thead>
@@ -171,7 +171,16 @@
                                     <td class="whitespace-nowrap px-6 py-3">
                                         {{$match->starts_at->addMinutes(90)->format('d.m.Y H:i')}}
                                     </td>
-                                    <td></td>
+                                    <td class="whitespace-nowrap px-6 py-3">
+                                        {{$match->team_1_score ?? '-'}} : {{$match->team_2_score ?? '-'}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-3">
+                                        @if(empty($match->bet->team_1_score))
+                                            <span>---</span>
+                                        @else
+                                            <span>{{$match->bet->team_1_score ?? '-'}} : {{$match->bet->team_2_score ?? '-'}}</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
 

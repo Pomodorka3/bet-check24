@@ -61,28 +61,32 @@
                                     @if($user->id === auth()->user()->id) bg-black/[0.1] @elseif($user->pinned) bg-blue-100 @else bg-black/[0.02] @endif
                                     dark:border-white/10">
                                         <td class="whitespace-nowrap p-2">
-                                            @if($user->pinned)
-                                                <button wire:click="unpinUser({{$user->id}})" title="Unpin user"
-                                                        type="button"
-                                                        class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-red-600/20 hover:bg-red-600 hover:text-white rounded-lg border border-gray-200 transition-all focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                         class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              d="m3 3 1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 0 1 1.743-1.342 48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664 19.5 19.5"/>
-                                                    </svg>
-                                                </button>
+                                            @if($user->id === auth()->user()->id)
+                                                <div class="h-9"></div>
                                             @else
-                                                <button wire:click="pinUser({{$user->id}})" title="Pin user"
-                                                        type="button"
-                                                        class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 transition-all hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                         class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
-                                                    </svg>
-                                                </button>
+                                                @if($user->pinned)
+                                                    <button wire:click="unpinUser({{$user->id}})" title="Unpin user"
+                                                            type="button"
+                                                            class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-red-600/20 hover:bg-red-600 hover:text-white rounded-lg border border-gray-200 transition-all focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                             class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  d="m3 3 1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 0 1 1.743-1.342 48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664 19.5 19.5"/>
+                                                        </svg>
+                                                    </button>
+                                                @else
+                                                    <button wire:click="pinUser({{$user->id}})" title="Pin user"
+                                                            type="button"
+                                                            class="p-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 transition-all hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                             class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
+                                                        </svg>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </td>
                                         <td class="whitespace-nowrap px-6 py-2 font-medium">

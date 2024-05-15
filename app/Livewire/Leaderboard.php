@@ -33,10 +33,8 @@ class Leaderboard extends Component
     {
         $this->communityId = $communityId;
 
-        $this->calculateOffsets();
+        $this->calculateOffsets(calledFromMount: true);
         $this->reloadLeaderboard();
-//        dd($this->users->first()->bets->where('match_id', 24)->first());
-
     }
 
     public function refresh()
@@ -44,12 +42,12 @@ class Leaderboard extends Component
         if ($this->usernameToSearch !== '')
             $this->searchUser();
         else {
-            $this->calculateOffsets();
+            $this->calculateOffsets(false);
             $this->reloadLeaderboard();
         }
     }
 
-    public function calculateOffsets()
+    public function calculateOffsets($calledFromMount)
     {
         $this->users = User::with(['bets', 'bets.match'])
             ->whereHas('communities', function ($query) {
@@ -59,12 +57,13 @@ class Leaderboard extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $this->offset2 = $this->currentUserOrder = $this->users->search(function ($user) {
+        $this->currentUserOrder = $this->users->search(function ($user) {
                 return $user->id === auth()->id();
             }) + 1; // e.g. 100
+        if ($calledFromMount) $this->offset2 = $this->currentUserOrder;
 
         if ($this->currentUserOrder > $this->users->count() - 7) {
-            $this->offset2 = $this->users->count() - 7;
+            if ($calledFromMount) $this->offset2 = $this->users->count() - 7;
             $this->currentUserInLastSevenUsers = true;
         }
 
@@ -219,9 +218,13 @@ class Leaderboard extends Component
         // Prepend pinned users to the beginning of the users1 list
         // and remove from the whole users list to avoid duplicates
         foreach ($pinnedUsers as $pinnedUserId) {
-            foreach ([1, 2] as $i) {
-
-                $this->{'users' . $i} = $this->{'users' . $i}->reject(function ($user) use ($pinnedUserId) {
+            if (isset($this->users1)) {
+                $this->users1 = $this->users1->reject(function ($user) use ($pinnedUserId) {
+                    return $user->id === $pinnedUserId;
+                });
+            }
+            if (isset($this->users2)) {
+                $this->users2 = $this->users2->reject(function ($user) use ($pinnedUserId) {
                     return $user->id === $pinnedUserId;
                 });
             }
