@@ -53,10 +53,12 @@ class SneakPreview extends Component
             $offset2 = $users->count() - 3;
             $currentUserInLastTwoUsers = true;
         }
+
+        $this->calculateUsersRank($users);
+
         if ($users->count() <= 7) {
             // Simply show all seven users ordered by points
             $this->users = $users;
-            $this->calculateUsersRank();
             return;
         } else {
             // Community has more than 7 users
@@ -76,16 +78,15 @@ class SneakPreview extends Component
             }
         }
 
-        $this->calculateUsersRank();
     }
 
-    public function calculateUsersRank()
+    public function calculateUsersRank(&$users)
     {
-        if ($this->users->isEmpty()) return;
+        if ($users->isEmpty()) return;
         // Calculate the rank - two users can have same rank if they have same amount of points
         $rank = 1;
-        $prevPoints = $this->users->first()->points;
-        foreach ($this->users as $user) {
+        $prevPoints = $users->first()->points;
+        foreach ($users as $user) {
             if ($user->points < $prevPoints) {
                 $rank++;
             }
