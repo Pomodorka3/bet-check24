@@ -99,7 +99,6 @@
                                             {{$user->points}}
                                         </td>
                                         @foreach($matches as $match)
-
                                             <td class="whitespace-nowrap px-1 @if(!$user->bets->where('match_id', $match->id)->count()) bg-gray-100/[0.8] @endif">
                                                 <div class="flex justify-center">
                                                     <div class="">
@@ -194,13 +193,42 @@
                                                 {{$user->points}}
                                             </td>
                                             @foreach($matches as $match)
-                                                <td class="whitespace-nowrap px-1 @if(!isset($user->bets[$match->id])) bg-gray-100/[0.8] @endif">
+                                                <td class="whitespace-nowrap px-1 @if(!$user->bets->where('match_id', $match->id)->count()) bg-gray-100/[0.8] @endif">
                                                     <div class="flex justify-center">
                                                         <div class="">
-                                                            @if(isset($user->bets[$match->id]))
-                                                                <span>{{$user->bets[$match->id]->team_1_score}} : {{$user->bets[$match->id]->team_2_score}}</span>
+                                                            @if($user->bets->where('match_id', $match->id)->count() > 0)
+                                                                <div class="flex flex-col">
+                                                                    @if($match->starts_at <= now() && !$match->evaluated)
+                                                                        <div class="flex">
+                                                                            <div class="my-auto relative flex h-2 w-2">
+                                                                                <span
+                                                                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                                                                <span
+                                                                                    class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                                                            </div>
+                                                                            <span class="ml-2"
+                                                                                  title="Current score">({{$match->team_1_score}} : {{$match->team_2_score}})</span>
+                                                                        </div>
+                                                                    @endif
+                                                                    <span class="text-center">{{$user->bets->where('match_id', $match->id)->first()->team_1_score}} : {{$user->bets->where('match_id', $match->id)->first()->team_2_score}}</span>
+                                                                </div>
                                                             @else
-                                                                <span class="text-gray-400">- : -</span>
+                                                                <div class="flex flex-col">
+                                                                    @if($match->starts_at <= now() && !$match->evaluated)
+                                                                        <div class="flex">
+                                                                            <div class="my-auto relative flex h-2 w-2">
+                                                                            <span
+                                                                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                                                                <span
+                                                                                    class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                                                            </div>
+                                                                            <span class="ml-2"
+                                                                                  title="Current score">({{$match->team_1_score}} : {{$match->team_2_score}})</span>
+                                                                        </div>
+                                                                    @endif
+                                                                    <span class="text-center text-gray-400"
+                                                                          title="Player's bet">- : -</span>
+                                                                </div>
                                                             @endif
                                                         </div>
                                                     </div>

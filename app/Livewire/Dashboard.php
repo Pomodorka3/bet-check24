@@ -23,10 +23,19 @@ class Dashboard extends Component
         $this->loadMatches();
     }
 
+    public function validateBetAndMatch($matchId) {
+        return
+            // Check if user has not already bet
+            !auth()->user()->bets->contains('match_id', $matchId)
+
+            // Check if match is running
+            && FootballMatch::find($matchId)->starts_at < now();
+    }
+
     public function placeBet($matchId, $team1Score, $team2Score)
     {
-        // TODO: check if already betted
-        // TODO: check if match is running
+        if ($this->validateBetAndMatch($matchId)) return;
+
         Bet::create([
             'match_id' => $matchId,
             'team_1_score' => $team1Score,
@@ -38,8 +47,8 @@ class Dashboard extends Component
 
     public function updateBet($matchId, $team1Score, $team2Score)
     {
-        // TODO: check if already betted
-        // TODO: check if match is running
+        if ($this->validateBetAndMatch($matchId)) return;
+
         $bet = Bet::where('match_id', $matchId)
             ->where('user_id', auth()->id())
             ->first();
@@ -47,16 +56,18 @@ class Dashboard extends Component
         $this->loadMatches();
     }
 
-    public function deleteBet($betId)
+    public function deleteBet($matchId)
     {
-        // TODO: check if already betted
-        // TODO: check if match is running
-        $bet = Bet::find($betId);
+        if ($this->validateBetAndMatch($matchId)) return;
+
+        $bet = Bet::where('match_id', $matchId)
+            ->where('user_id', auth()->id())
+            ->first();
         $bet->delete();
         $this->loadMatches();
     }
 
-    private function loadMatches() {
+    public function loadMatches() {
         $this->loadUpcomingMatches();
         $this->loadRunningMatches();
         $this->loadPastMatches();

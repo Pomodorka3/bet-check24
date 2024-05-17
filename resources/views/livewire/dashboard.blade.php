@@ -1,4 +1,4 @@
-<div wire:poll class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
+<div wire:poll="loadMatches" class="mt-4 grid grid-cols-1 gap-4 sm:flex-row w-full flex-col" x-cloak x-data="dashboard">
 
     <div class="w-full p-6 bg-white overflow-hidden shadow-sm rounded-lg">
         <h2 class="text-xl">Upcoming matches</h2>
@@ -6,6 +6,7 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
+                        @if($upcomingMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -55,7 +56,7 @@
                                                     </svg>
                                                 </button>
                                                 <button
-                                                    wire:click="deleteBet({{$match->bet->id}})"
+                                                    wire:click="deleteBet({{$match->id}})"
                                                     class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -78,6 +79,9 @@
 
                             </tbody>
                         </table>
+                        @else
+                            <p>No upcoming matches.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -90,6 +94,7 @@
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full py-2">
                     <div class="overflow-hidden">
+                        @if($runningMatches->count() > 0 || $pastMatches->count() > 0)
                         <table
                             class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             <thead
@@ -186,6 +191,9 @@
 
                             </tbody>
                         </table>
+                        @else
+                            <p>No playing or past matches.</p>
+                        @endif
                     </div>
                 </div>
             </div>
