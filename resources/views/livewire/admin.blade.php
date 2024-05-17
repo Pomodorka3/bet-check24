@@ -79,6 +79,7 @@
                                         <label for="team_{{$i}}_id"
                                                class="block mb-2 font-medium text-gray-900 dark:text-white">Team {{$i}}</label>
                                         <select id="team_{{$i}}_id"
+                                                name="team_{{$i}}_id"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option selected>---</option>
                                             @foreach($teams as $team)
@@ -90,9 +91,8 @@
 
                                 <div class="w-full md:w-48 md:mx-2">
                                     <label for="starts_at"
-                                           class="block mb-2 font-medium text-gray-900 dark:text-white">Starts
-                                        at</label>
-                                    <input id="starts_at" type="datetime-local"
+                                           class="block mb-2 font-medium text-gray-900 dark:text-white">Starts at</label>
+                                    <input id="starts_at" name="starts_at" type="datetime-local"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                            required/>
                                 </div>

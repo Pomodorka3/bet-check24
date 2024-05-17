@@ -32,7 +32,10 @@ class Admin extends Component
     {
         $this->runningMatches = FootballMatch::where('starts_at', '<=', now())
             ->where('evaluated', false)
-            ->get();
+            ->get()
+            ->filter(function ($match) {
+            return now() <= $match->starts_at->addMinutes(90);
+        });
     }
 
     public function setScore($matchId)
