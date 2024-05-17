@@ -3,8 +3,6 @@
 use App\Http\Controllers\CommunityController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
-
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('community', CommunityController::class);
     Route::get('community/{community}/join', [CommunityController::class, 'join'])
@@ -18,7 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard.index');
-
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
 });
 
 

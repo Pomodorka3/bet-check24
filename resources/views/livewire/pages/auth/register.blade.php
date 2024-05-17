@@ -21,8 +21,8 @@ new #[Layout('layouts.guest')] class extends Component {
     public function register(): void
     {
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'name' => ['required', 'string', 'max:255', 'unique:' . User::class],
+            'email' => ['string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -44,7 +44,7 @@ new #[Layout('layouts.guest')] class extends Component {
     <form wire:submit="register">
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')"/>
+            <x-input-label for="name" :value="__('Username')"/>
             <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required
                           autofocus autocomplete="name"/>
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
