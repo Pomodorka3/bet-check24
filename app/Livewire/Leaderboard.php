@@ -59,11 +59,11 @@ class Leaderboard extends Component
 
         $this->currentUserOrder = $this->users->search(function ($user) {
                 return $user->id === auth()->id();
-            }) + 1; // e.g. 100
+            }); // e.g. 100
         if ($calledFromMount) $this->offset2 = $this->currentUserOrder;
 
-        if ($this->currentUserOrder > $this->users->count() - 7) {
-            if ($calledFromMount) $this->offset2 = $this->users->count() - 7;
+        if ($this->currentUserOrder > $this->users->count() - 8) {
+            if ($calledFromMount) $this->offset2 = $this->users->count() - 8;
             $this->currentUserInLastSevenUsers = true;
         }
 
@@ -89,8 +89,6 @@ class Leaderboard extends Component
             }
 
         }
-        // TODO: append pinned users to the beginning
-        // TODO: remove pinned users from the list (to avoid duplicates)
 
         // Load matches
         $this->matches = FootballMatch::orderBy('starts_at', 'asc')
@@ -103,8 +101,10 @@ class Leaderboard extends Component
 
     public function searchUser()
     {
-        if ($this->usernameToSearch === '')
+        if ($this->usernameToSearch === '') {
+            $this->reloadLeaderboard();
             return;
+        }
 
         $this->users = User::with('bets', 'bets.match')
             ->whereHas('communities', function ($query) {

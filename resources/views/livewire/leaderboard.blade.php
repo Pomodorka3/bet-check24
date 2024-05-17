@@ -9,7 +9,7 @@
             {{--            <p>{{$this->currentUserOrder}}</p>--}}
             {{--            <p>{{$this->currentUserOrder - $this->offset2 + 1}}</p>--}}
             <div class="flex">
-                <input wire:model="usernameToSearch" type="text" id="usernameToSearch" name="usernameToSearch"
+                <input wire:model.defer="usernameToSearch" type="text" id="usernameToSearch" name="usernameToSearch"
                        @keydown.enter="$wire.searchUser()"
                        class="w-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                        placeholder="Search user"/>
