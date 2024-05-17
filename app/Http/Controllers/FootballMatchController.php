@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FootballMatch;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FootballMatchController extends Controller
@@ -28,7 +29,20 @@ class FootballMatchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!auth()->user()->hasRole('admin')) abort(403);
+
+        if ($request->get('team_1_id') === $request->get('team_2_id')) {
+            return redirect()->route('admin.index')->with('error', 'The teams must be different.');
+        }
+
+        $footballMatch = new FootballMatch([
+            'team_1_id' => $request->get('team_1_id'),
+            'team_2_id' => $request->get('team_2_id'),
+            'starts_at' => Carbon::parse($request->get('starts_at'))
+        ]);
+        $footballMatch->save();
+
+        return redirect()->route('admin.index');
     }
 
     /**

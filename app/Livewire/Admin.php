@@ -9,6 +9,7 @@ class Admin extends Component
 {
     public $runningMatches;
     public $status;
+    public $teams;
     public $scoresToSet;
 
     public function render()

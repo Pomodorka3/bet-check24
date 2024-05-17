@@ -46,6 +46,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function hasRole($role)
+    {
+        return $this->roles->contains('name', $role);
+    }
+
     public function communities() {
         return $this->belongsToMany(Community::class, 'community_user', 'user_id', 'community_id');
     }
@@ -56,5 +61,10 @@ class User extends Authenticatable
 
     public function createdCommunities() {
         return $this->hasMany(Community::class, 'created_by');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 }

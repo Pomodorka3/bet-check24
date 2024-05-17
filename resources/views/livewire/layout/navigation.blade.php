@@ -30,9 +30,11 @@ new class extends Component
                     <x-nav-link :href="route('community.index')" :active="request()->routeIs('community.index')" wire:navigate>
                         {{ __('Communities') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin-panel')" :active="request()->routeIs('admin-panel')" wire:navigate>
-                        {{ __('Admin panel') }}
-                    </x-nav-link>
+                    @if(auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin-panel')" wire:navigate>
+                            {{ __('Admin panel') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

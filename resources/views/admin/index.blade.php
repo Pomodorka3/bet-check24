@@ -7,7 +7,7 @@
 
     <div>
         <div class="mx-auto sm:px-6 lg:px-8">
-            <livewire:admin/>
+            <livewire:admin :teams="$teams"/>
         </div>
     </div>
 </x-app-layout>

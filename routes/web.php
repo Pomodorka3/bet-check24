@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FootballMatchController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -10,13 +13,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('community/{community}/leave', [CommunityController::class, 'leave'])
         ->name('community.leave');
 
-    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])
-        ->name('admin-panel');
-//    ->middleware(['auth', 'can:admin']);
+    Route::resource('football-match', FootballMatchController::class);
 
-    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+    Route::get('dashboard', [DashboardController::class, 'index'])
         ->name('dashboard.index');
-    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index']);
+});
+
+Route::middleware(\App\Http\Middleware\IsAdmin::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin.index');
 });
 
 

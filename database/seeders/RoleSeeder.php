@@ -2,17 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\Bet;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class BetSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Bet::factory(400)->create();
+        $roles = [
+            ['name' => 'admin']
+        ];
+
+        foreach ($roles as $role) {
+            \App\Models\Role::create($role);
+        }
     }
 }
