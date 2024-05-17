@@ -22,7 +22,7 @@ All project requirements are described in the [challenge description](https://gi
 
 ## How to understand what happens in the code?
 1. Search for an entering-point of your request into web application in `routes/web.php`.  
-   Every route hast it's name and *controller* which processes the request.
+   Every route has it's name and *controller* which processes the request.
 2. Open controller specified in route selected in previous step and search for a method also specified in routes file.
 3. Open view which is returned in the end of a controlled method - in case any view (e.g. `index.blade.php`) is returned.
 4. If there is `<livewire:something>`in a view, have a look for a Livewire controller inside `app/Livewire/` directory (in this case it would be `app/Livewire/Something.php`. There could be a lot of logic implemented in a Livewire controller.
