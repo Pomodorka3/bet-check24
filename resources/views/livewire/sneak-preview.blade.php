@@ -24,7 +24,7 @@
                                 @if($key !== $users->count() - 1) border-b @endif
                                 @if($key === 2 || $key === $users->count() - 2) border-black @endif
                                 @if($user->id === auth()->user()->id) bg-blue-200 @else bg-white @endif
-                                border-neutral-200 dark:border-white/10">
+                                dark:border-white/10">
                                     <td class="whitespace nowrap px-6 py-2 font-medium">
                                         <span>{{$user->rank}}</span>
                                     </td>
