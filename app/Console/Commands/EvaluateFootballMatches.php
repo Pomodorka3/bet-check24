@@ -26,8 +26,11 @@ class EvaluateFootballMatches extends Command
      */
     public function handle()
     {
-        $matches = FootballMatch::where('starts_at', '<=', now())
-            ->get();
+        $matches = FootballMatch::where('evaluated', false)
+            ->get()
+            ->filter(function ($match) {
+                return $match->starts_at->addMinutes(90) <= now();
+            });
 
         foreach ($matches as $match) {
             $match->evaluate();

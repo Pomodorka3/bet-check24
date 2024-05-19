@@ -90,6 +90,9 @@ class Dashboard extends Component
         $this->runningMatches = FootballMatch::where('starts_at', '<=', now())
             ->where('evaluated', false)
             ->get();
+        foreach ($this->runningMatches as $match) {
+            $match->bet = auth()->user()->bets->where('match_id', $match->id)->first();
+        }
     }
 
     public function loadPastMatches()
@@ -97,5 +100,8 @@ class Dashboard extends Component
         $this->pastMatches = FootballMatch::where('starts_at', '<=', now())
             ->where('evaluated', true)
             ->get();
+        foreach ($this->pastMatches as $match) {
+            $match->bet = auth()->user()->bets->where('match_id', $match->id)->first();
+        }
     }
 }

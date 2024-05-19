@@ -143,7 +143,7 @@
                                         {{$match->team_1_score ?? '-'}} : {{$match->team_2_score ?? '-'}}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-3">
-                                        @if(empty($match->bet->team_1_score))
+                                        @if(!isset($match->bet->team_1_score))
                                             <span>---</span>
                                         @else
                                             <span>{{$match->bet->team_1_score ?? '-'}} : {{$match->bet->team_2_score ?? '-'}}</span>

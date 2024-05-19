@@ -68,7 +68,7 @@ class FootballMatch extends Model
             // Update only if points are greater than 0
             if ($points > 0)
                 $bet->user->update([
-                    'points' => $points
+                    'points' => ($bet->user->points + $points)
                 ]);
         }
 
