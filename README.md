@@ -3,7 +3,7 @@
 # Bet GenDev CHECK24 Challenge
 This project is a simple betting system that allows users to place bets on the outcome of the games of the European Championship 2024.      
 It was developed as a part of an application process to the [CHECK24 GenDev Scholarship](https://www.talents.check24.de/gendev).      
-All project requirements are described in the [challenge description](https://github.com/check24-scholarships/check24-betting-challenge).
+All project requirements are described in the [challenge description](https://github.com/check24-scholarships/check24-betting-challenge).\
 YouTube video with a demo of the project can be found [here](https://youtu.be/AP5gargWcWk).
 
 ## Technologies used:
